@@ -13,7 +13,7 @@ const config: PostgresConnectionOptions = {
   port: 5432,
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASS,
-  database: 'mitash',
+  database: 'mediumclone',
   entities: [__dirname + '/**/*.entity{.ts,.js}'],
   synchronize: false,
   migrations: [__dirname + '/migrations/**/*{.ts,.js}']
