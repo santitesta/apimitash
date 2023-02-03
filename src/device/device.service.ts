@@ -48,7 +48,12 @@ export class DeviceService {
 
   // Get device by Id
   async findById(id: number): Promise<DeviceEntity> {
-    return this.deviceRepository.findOne({ where: { id } });
+    return await this.deviceRepository.findOne({ where: { id } });
+  }
+
+  // Get all devices
+  async getAllDevices(): Promise<DeviceEntity[]> {
+    return await this.deviceRepository.find();
   }
 
   // Update device
