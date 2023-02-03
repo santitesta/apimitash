@@ -10,6 +10,7 @@ import { DeviceEntity } from '@app/device/device.entity';
 import { DeviceResponseInterface } from './types/deviceResponse.interface';
 import { CreateDeviceDto } from './dto/createDevice.dto';
 import { UpdateDeviceDto } from './dto/updateDevice.dto';
+import { UserEntity } from '@app/user/user.entity';
 ConfigModule.forRoot();
 
 @Injectable()
@@ -19,6 +20,8 @@ export class DeviceService {
     private readonly deviceRepository: Repository<DeviceEntity>,
     @InjectRepository(ClientEntity)
     private readonly clientRepository: Repository<ClientEntity>,
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
   ) {}
 
   // Create device
@@ -51,10 +54,24 @@ export class DeviceService {
   // Update device
   async updateDevice(
     deviceId: number,
+    userId: number,
     updateDeviceDto: UpdateDeviceDto,
   ): Promise<DeviceEntity> {
     const device = await this.findById(deviceId);
+
+    if (!device) {
+      throw new HttpException(
+        'Device does not exist',
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    }
+
     Object.assign(device, updateDeviceDto);
+
+    const user = await this.userRepository.findOne({ where: { id: userId } });
+    if (user) {
+      device.inCharge = user;
+    }
     return await this.deviceRepository.save(device);
   }
 

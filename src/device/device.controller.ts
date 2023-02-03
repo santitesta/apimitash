@@ -41,13 +41,15 @@ export class DeviceController {
   }
 
   //Update device
-  @Put('device/:id')
+  @Put('device/:deviceId/:userId')
   async updateCurrentUser(
-    @Param('id') deviceId: number,
+    @Param('deviceId') deviceId: number,
+    @Param('userId') userId: number,
     @Body('user') updateDeviceDto: UpdateDeviceDto,
   ): Promise<DeviceResponseInterface> {
     const device = await this.deviceService.updateDevice(
       deviceId,
+      userId,
       updateDeviceDto,
     );
     return this.deviceService.buildDeviceResponse(device);

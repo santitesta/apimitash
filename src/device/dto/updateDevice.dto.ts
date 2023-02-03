@@ -3,5 +3,5 @@ export class UpdateDeviceDto {
 
   readonly type: string;
 
-  readonly inCharge: string;
+  readonly role: string;
 }
