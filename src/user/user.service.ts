@@ -46,7 +46,7 @@ export class UserService {
 
   // Get all users
   async getAllUsers(): Promise<UserEntity[]> {
-    return this.userRepository.find();
+    return await this.userRepository.find();
   }
 
   // Login

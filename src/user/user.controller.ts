@@ -51,7 +51,7 @@ export class UserController {
   // Get all users
   @Get('users')
   async getAllUsers(): Promise<UserEntity[]> {
-    return this.userService.getAllUsers();
+    return await this.userService.getAllUsers();
   }
 
   //Update user
