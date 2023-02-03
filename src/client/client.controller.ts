@@ -29,11 +29,11 @@ export class ClientController {
   }
 
   //Update client
-  @Put('client')
+  @Put('client/:id')
   @UseGuards(AuthGuard)
   async updateCurrentUser(
     @Param('id') clientId: number,
-    @Body('user') updateClientDto: UpdateClientDto
+    @Body('client') updateClientDto: UpdateClientDto
   ): Promise<ClientResponseInterface> {
     const client = await this.clientService.updateClient(clientId, updateClientDto);
     return this.clientService.buildClientResponse(client);
