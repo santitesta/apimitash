@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { DeviceEntity } from '@app/device/device.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'clients' })
 export class ClientEntity {
@@ -31,4 +32,7 @@ export class ClientEntity {
 
   @Column()
   treasuryPhone: string;
+
+  @OneToMany(() => DeviceEntity, (device) => device.owner)
+  devices: DeviceEntity[];
 }

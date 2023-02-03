@@ -1,5 +1,6 @@
 import { BeforeInsert, Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { hash } from 'bcrypt';
+import { DeviceEntity } from "@app/device/device.entity";
 // import { ArticleEntity } from "@app/article/article.entity";
 
 @Entity({ name: 'users' })
@@ -24,10 +25,6 @@ export class UserEntity {
     this.password = await hash(this.password, 10);
   }
 
-  // @OneToMany(() => ArticleEntity, (article) => article.author)
-  // articles: ArticleEntity[];
-
-  // @ManyToMany(() => ArticleEntity)
-  // @JoinTable()
-  // favorites: ArticleEntity[];
+  @OneToMany(() => DeviceEntity, (device) => device.inCharge)
+  devices: DeviceEntity[];
 }
