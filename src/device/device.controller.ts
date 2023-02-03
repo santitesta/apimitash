@@ -18,7 +18,7 @@ export class DeviceController {
   constructor(private readonly deviceService: DeviceService) {}
 
   // Create device
-  @Post('device')
+  @Post('device/:id')
   @UsePipes(new ValidationPipe())
   async createDevice(
     @Param('id') clientId: number,

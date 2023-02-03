@@ -18,8 +18,8 @@ export class CreateClientDto {
 
   readonly cuit: number;
 
-  readonly paymentEmail: string;
+  readonly paymentEmail: string; // Gotta add @IsEmail()
 
-  readonly treasuryPhone: string;
+  readonly treasuryPhone: string; //Gotta change it to number
 
 }

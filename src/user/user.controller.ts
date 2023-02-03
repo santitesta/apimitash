@@ -13,7 +13,7 @@ export class UserController {
   constructor(private readonly userService: UserService) { }
 
   // Create user
-  @Post('users')
+  @Post('user')
   @UsePipes(new ValidationPipe())
   async createUser(
     @Body('user') createUserDto: CreateUserDto): Promise<UserResponseInterface> {
@@ -22,7 +22,7 @@ export class UserController {
   }
 
   // Login
-  @Post('users/login')
+  @Post('user/login')
   @UsePipes(new ValidationPipe())
   async login(
     @Body('user') loginDto: LoginUserDto

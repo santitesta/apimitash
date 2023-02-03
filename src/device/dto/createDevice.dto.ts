@@ -8,5 +8,5 @@ export class CreateDeviceDto {
   readonly type: string;
 
   @IsNotEmpty()
-  readonly role: string;
+  readonly role: string; // TBD change to state
 }

@@ -6,7 +6,7 @@ import { HttpException } from '@nestjs/common/exceptions';
 import { HttpStatus } from '@nestjs/common/enums';
 
 import { ClientEntity } from '@app/client/client.entity';
-import { DeviceEntity } from './device.entity';
+import { DeviceEntity } from '@app/device/device.entity';
 import { DeviceResponseInterface } from './types/deviceResponse.interface';
 import { CreateDeviceDto } from './dto/createDevice.dto';
 import { UpdateDeviceDto } from './dto/updateDevice.dto';
