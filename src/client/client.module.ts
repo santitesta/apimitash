@@ -11,4 +11,4 @@ import { AuthGuard } from "@app/user/guards/auth.guard";
   providers: [ClientService, AuthGuard],
   exports: [ClientService]
 })
-export class UserModule { }
+export class ClientModule { }
