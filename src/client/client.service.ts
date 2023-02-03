@@ -33,7 +33,12 @@ export class ClientService {
 
   // Get client by Id
   async findById(id: number): Promise<ClientEntity> {
-    return this.clientRepository.findOne({ where: { id } });
+    return await this.clientRepository.findOne({ where: { id } });
+  }
+
+  // Get all clients
+  async getAllClients(): Promise<ClientEntity[]> {
+    return await this.clientRepository.find();
   }
 
   // Update client
@@ -50,8 +55,8 @@ export class ClientService {
       );
     }
 
-    console.log('Client: ',client)
-    console.log('Dto: ',updateClientDto)
+    console.log('Client: ', client);
+    console.log('Dto: ', updateClientDto);
     Object.assign(client, updateClientDto);
     return await this.clientRepository.save(client);
   }

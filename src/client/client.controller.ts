@@ -1,20 +1,33 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
-import { ClientService } from "@app/client/client.service";
-import { ClientResponseInterface } from "./types/clientResponse.interface";
-import { CreateClientDto } from "@app/client/dto/createClient.dto";
-import { DeleteResult } from "typeorm";
-import { AuthGuard } from "@app/user/guards/auth.guard";
-import { UpdateClientDto } from "./dto/updateClient.dto";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
+import { ClientService } from '@app/client/client.service';
+import { ClientResponseInterface } from './types/clientResponse.interface';
+import { CreateClientDto } from '@app/client/dto/createClient.dto';
+import { DeleteResult } from 'typeorm';
+import { AuthGuard } from '@app/user/guards/auth.guard';
+import { UpdateClientDto } from './dto/updateClient.dto';
+import { ClientEntity } from './client.entity';
 
 @Controller()
 export class ClientController {
-  constructor(private readonly clientService: ClientService) { }
+  constructor(private readonly clientService: ClientService) {}
 
   // Create client
   @Post('client')
   @UsePipes(new ValidationPipe())
   async createUser(
-    @Body('client') createClientDto: CreateClientDto): Promise<ClientResponseInterface> {
+    @Body('client') createClientDto: CreateClientDto,
+  ): Promise<ClientResponseInterface> {
     const client = await this.clientService.createClient(createClientDto);
     return this.clientService.buildClientResponse(client);
   }
@@ -22,10 +35,16 @@ export class ClientController {
   // Get client by id
   @Get('client/:id')
   async currentUser(
-    @Param('id') clientId: number
+    @Param('id') clientId: number,
   ): Promise<ClientResponseInterface> {
     const client = await this.clientService.findById(clientId);
     return this.clientService.buildClientResponse(client);
+  }
+
+  // Get all clients
+  @Get('/clients')
+  async getAllClients(): Promise<ClientEntity[]> {
+    return await this.clientService.getAllClients();
   }
 
   //Update client
@@ -33,18 +52,19 @@ export class ClientController {
   @UseGuards(AuthGuard)
   async updateCurrentUser(
     @Param('id') clientId: number,
-    @Body('client') updateClientDto: UpdateClientDto
+    @Body('client') updateClientDto: UpdateClientDto,
   ): Promise<ClientResponseInterface> {
-    const client = await this.clientService.updateClient(clientId, updateClientDto);
+    const client = await this.clientService.updateClient(
+      clientId,
+      updateClientDto,
+    );
     return this.clientService.buildClientResponse(client);
   }
 
   //Delete client
   @Delete(':id')
   @UseGuards(AuthGuard)
-  async deleteArticle(
-    @Param('id') clientId: number,
-  ): Promise<DeleteResult> {
+  async deleteArticle(@Param('id') clientId: number): Promise<DeleteResult> {
     return await this.clientService.deleteClient(clientId);
   }
 }
