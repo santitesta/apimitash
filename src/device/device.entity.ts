@@ -1,6 +1,13 @@
 import { ClientEntity } from '@app/client/client.entity';
+import { OrderEntity } from '@app/order/order.entity';
 import { UserEntity } from '@app/user/user.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity({ name: 'devices' })
 export class DeviceEntity {
@@ -18,4 +25,7 @@ export class DeviceEntity {
 
   @ManyToOne(() => ClientEntity, (client) => client.devices, { eager: true })
   owner: ClientEntity;
+
+  @OneToMany(() => OrderEntity, (order) => order.device)
+  orders: DeviceEntity[];
 }
