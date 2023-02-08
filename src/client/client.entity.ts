@@ -24,8 +24,8 @@ export class ClientEntity {
   @Column()
   openTime: string;
 
-  @Column()
-  cuit: number;
+  @Column({ type: 'bigint' })
+  cuit: string;
 
   @Column()
   paymentEmail: string;
