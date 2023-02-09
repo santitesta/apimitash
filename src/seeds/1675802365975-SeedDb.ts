@@ -14,7 +14,7 @@ export class SeedDb1675114030651 implements MigrationInterface {
     );
 
     await queryRunner.query(
-      `INSERT INTO devices ("serialNumber", type) VALUES ('EB250562', 'Freezer')`,
+      `INSERT INTO devices ("serialNumber", type, "ownerId") VALUES ('EB250562', 'Freezer', '1')`,
     );
 
     await queryRunner.query(
