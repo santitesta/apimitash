@@ -1,6 +1,12 @@
-import { BeforeInsert, Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+  BeforeInsert,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { hash } from 'bcrypt';
-import { DeviceEntity } from "@app/device/device.entity";
+import { DeviceEntity } from '@app/device/device.entity';
 // import { ArticleEntity } from "@app/article/article.entity";
 
 @Entity({ name: 'users' })

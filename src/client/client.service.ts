@@ -54,9 +54,6 @@ export class ClientService {
         HttpStatus.UNPROCESSABLE_ENTITY,
       );
     }
-
-    console.log('Client: ', client);
-    console.log('Dto: ', updateClientDto);
     Object.assign(client, updateClientDto);
     return await this.clientRepository.save(client);
   }
