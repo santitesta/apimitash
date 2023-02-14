@@ -6,6 +6,7 @@ import ormconfig from '@app/ormconfig';
 import { UserModule } from './user/user.module';
 import { ClientModule } from './client/client.module';
 import { DeviceModule } from './device/device.module';
+import { OrderModule } from './order/order.module';
 import { AuthMiddleware } from './user/middlewares/auth.middleware';
 
 @Module({
@@ -14,6 +15,7 @@ import { AuthMiddleware } from './user/middlewares/auth.middleware';
     UserModule,
     ClientModule,
     DeviceModule,
+    OrderModule,
   ],
   controllers: [AppController],
   providers: [AppService],

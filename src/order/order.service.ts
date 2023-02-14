@@ -1,14 +1,13 @@
 import { ConfigModule } from '@nestjs/config';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, getConnection } from 'typeorm';
+import { Repository } from 'typeorm';
 
 import { OrderEntity } from './order.entity';
 import { OrderResponseInterface } from './types/orderResponse.interface';
 import { DeviceEntity } from '@app/device/device.entity';
 import { CreateOrderDto } from './dto/createOrder.dto';
 import { UpdateOrderDto } from './dto/updateOrder.dto';
-import { createConnection } from 'net';
 ConfigModule.forRoot();
 
 @Injectable()
@@ -34,8 +33,10 @@ export class OrderService {
     }
 
     const newOrder = new OrderEntity();
-    newOrder.description.push(createOrderDto.description);
-    newOrder.device = device;
+    Object.assign(newOrder, {
+      description: [createOrderDto.description],
+      device,
+    });
     return await this.orderRepository.save(newOrder);
   }
 
@@ -47,7 +48,8 @@ export class OrderService {
 
   // Get all orders
   async getAllOrders(): Promise<OrderEntity[]> {
-    return await this.orderRepository.find();
+    const orders = await this.orderRepository.find();
+    return orders;
   }
 
   // Update order
