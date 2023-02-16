@@ -1,7 +1,7 @@
-import { DeviceEntity } from '@app/device/device.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { DeviceEntity } from "@app/device/device.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity({ name: 'clients' })
+@Entity({ name: "clients" })
 export class ClientEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -12,7 +12,7 @@ export class ClientEntity {
   @Column()
   company: string;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()
@@ -24,7 +24,7 @@ export class ClientEntity {
   @Column()
   openTime: string;
 
-  @Column({ type: 'bigint' })
+  @Column({ type: "bigint" })
   cuit: string;
 
   @Column()

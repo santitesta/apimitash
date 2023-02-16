@@ -5,10 +5,10 @@ import { DeviceService } from '@app/device/device.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthGuard } from '@app/user/guards/auth.guard';
 import { ClientEntity } from '@app/client/client.entity';
-import { UserEntity } from '@app/user/user.entity';
+import { EmployeeEntity} from '@app/user/employee.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ClientEntity, DeviceEntity, UserEntity])],
+  imports: [TypeOrmModule.forFeature([ClientEntity, DeviceEntity, EmployeeEntity])],
   controllers: [DeviceController],
   providers: [DeviceService, AuthGuard],
   exports: [DeviceService],

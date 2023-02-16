@@ -3,16 +3,16 @@ import { ExpressRequest } from "@app/types/expressRequest.interface";
 import { Injectable, NestMiddleware } from "@nestjs/common";
 import { NextFunction, Response } from "express";
 import { verify } from "jsonwebtoken";
-import { UserService } from "../user.service";
+import { EmployeeService } from "../employee.service";
 ConfigModule.forRoot();
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
-  constructor(private readonly userService: UserService) { }
+  constructor(private readonly employeeService: EmployeeService) { }
 
   async use(req: ExpressRequest, _: Response, next: NextFunction) {
     if (!req.headers.authorization) {
-      req.user = null
+      req.employee = null
       next()
       return
     }
@@ -21,11 +21,11 @@ export class AuthMiddleware implements NestMiddleware {
 
     try {
       const decode = verify(token, process.env.JWT_SECRET) as { id: number, username: string, email: string };
-      const user = await this.userService.findById(decode.id)
-      req.user = user
+      const employee = await this.employeeService.findById(decode.id)
+      req.employee = employee
       next();
     } catch (error) {
-      req.user = null
+      req.employee = null
       next()
     }
   }

@@ -1,27 +1,27 @@
 import { ConfigModule } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from '@app/user/dto/createUser.dto';
-import { UserEntity } from '@app/user/user.entity';
+import { CreateUserDto } from '@app/employee/dto/createUser.dto';
+import { EmployeeEntity} from '@app/employee/employee.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { sign } from 'jsonwebtoken';
-import { UserResponseInterface } from './types/userResponse.interface';
+import { UserResponseInterface } from './types/employeeResponse.interface';
 import { HttpException } from '@nestjs/common/exceptions';
 import { HttpStatus } from '@nestjs/common/enums';
-import { LoginUserDto } from './dto/loginUser.dto';
+import { LoginUserDto } from './dto/loginEmployee.dto';
 import { compare } from 'bcrypt';
-import { UpdateUserDto } from './dto/updateUser.dto';
+import { UpdateUserDto } from './dto/updateEmployee.dto';
 ConfigModule.forRoot();
 
 @Injectable()
-export class UserService {
+export class EmployeeService {
   constructor(
-    @InjectRepository(UserEntity)
-    private readonly userRepository: Repository<UserEntity>,
+    @InjectRepository(EmployeeEntity)
+    private readonly userRepository: Repository<EmployeeEntity>,
   ) {}
 
-  // Create user
-  async createUser(createUserDto: CreateUserDto): Promise<UserEntity> {
+  // Create employee
+  async createUser(createUserDto: CreateUserDto): Promise<EmployeeEntity> {
     const userByEmail = await this.userRepository.findOne({
       where: { email: createUserDto.email },
     });
@@ -34,31 +34,31 @@ export class UserService {
         HttpStatus.UNPROCESSABLE_ENTITY,
       );
     }
-    const newUser = new UserEntity();
+    const newUser = new EmployeeEntity();
     Object.assign(newUser, createUserDto);
     return await this.userRepository.save(newUser);
   }
 
-  // Get user by Id
-  async findById(id: number): Promise<UserEntity> {
+  // Get employee by Id
+  async findById(id: number): Promise<EmployeeEntity> {
     return this.userRepository.findOne({ where: { id } });
   }
 
   // Get all users
-  async getAllUsers(): Promise<UserEntity[]> {
+  async getAllUsers(): Promise<EmployeeEntity[]> {
     return await this.userRepository.find();
   }
 
   // Login
-  async login(loginUserDto: LoginUserDto): Promise<UserEntity> {
-    const user = await this.userRepository.findOne({
+  async login(loginUserDto: LoginUserDto): Promise<EmployeeEntity> {
+    const employee = await this.userRepository.findOne({
       where: {
         email: loginUserDto.email,
       },
       select: ['id', 'username', 'email', 'password'],
     });
 
-    if (!user) {
+    if (!employee) {
       throw new HttpException(
         'Credentials are not valid',
         HttpStatus.UNPROCESSABLE_ENTITY,
@@ -67,7 +67,7 @@ export class UserService {
 
     const isPasswordCorrect = await compare(
       loginUserDto.password,
-      user.password,
+      employee.password,
     );
 
     if (!isPasswordCorrect) {
@@ -77,36 +77,36 @@ export class UserService {
       );
     }
 
-    delete user.password;
-    return user;
+    delete employee.password;
+    return employee;
   }
 
-  // Update user
+  // Update employee
   async updateUser(
     userId: number,
     updateUserDto: UpdateUserDto,
-  ): Promise<UserEntity> {
-    const user = await this.findById(userId);
-    Object.assign(user, updateUserDto);
-    return await this.userRepository.save(user);
+  ): Promise<EmployeeEntity> {
+    const employee = await this.findById(userId);
+    Object.assign(employee, updateUserDto);
+    return await this.userRepository.save(employee);
   }
 
-  generateJwt(user: UserEntity): string {
+  generateJwt(employee: EmployeeEntity): string {
     return sign(
       {
-        id: user.id,
-        username: user.username,
-        email: user.email,
+        id: employee.id,
+        username: employee.username,
+        email: employee.email,
       },
       process.env.JWT_SECRET,
     );
   }
 
-  buildUserResponse(user: UserEntity): UserResponseInterface {
+  buildUserResponse(employee: EmployeeEntity): UserResponseInterface {
     return {
-      user: {
-        ...user,
-        token: this.generateJwt(user),
+      employee: {
+        ...employee,
+        token: this.generateJwt(employee),
       },
     };
   }

@@ -4,20 +4,19 @@ import {
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
-} from 'typeorm';
-import { hash } from 'bcrypt';
-import { DeviceEntity } from '@app/device/device.entity';
-// import { ArticleEntity } from "@app/article/article.entity";
+} from "typeorm";
+import { hash } from "bcrypt";
+import { OrderEntity } from "@app/order/order.entity";
 
-@Entity({ name: 'users' })
-export class UserEntity {
+@Entity({ name: "users" })
+export class EmployeeEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
-  @Column()
+  @Column({ unique: true })
   username: string;
 
   @Column()
@@ -31,6 +30,6 @@ export class UserEntity {
     this.password = await hash(this.password, 10);
   }
 
-  @OneToMany(() => DeviceEntity, (device) => device.inCharge)
-  devices: DeviceEntity[];
+  @OneToMany(() => OrderEntity, (order) => order.employee)
+  orders: OrderEntity[];
 }

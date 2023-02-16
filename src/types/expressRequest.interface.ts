@@ -1,6 +1,6 @@
-import { UserEntity } from "@app/user/user.entity";
+import { EmployeeEntity } from "@app/user/employee.entity";
 import { Request } from "express";
 
 export interface ExpressRequest extends Request {
-  user?: UserEntity
+  employee?: EmployeeEntity;
 }
