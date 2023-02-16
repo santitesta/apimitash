@@ -3,11 +3,11 @@ import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import ormconfig from "@app/ormconfig";
-import { EmployeeModule } from "./user/employee.module";
+import { EmployeeModule } from "./employee/employee.module";
 import { ClientModule } from "./client/client.module";
 import { DeviceModule } from "./device/device.module";
 import { OrderModule } from "./order/order.module";
-import { AuthMiddleware } from "./user/middlewares/auth.middleware";
+import { AuthMiddleware } from "./employee/middlewares/auth.middleware";
 
 @Module({
   imports: [

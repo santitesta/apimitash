@@ -8,7 +8,7 @@ import {
 import { hash } from "bcrypt";
 import { OrderEntity } from "@app/order/order.entity";
 
-@Entity({ name: "users" })
+@Entity({ name: "employees" })
 export class EmployeeEntity {
   @PrimaryGeneratedColumn()
   id: number;

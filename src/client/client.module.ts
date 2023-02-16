@@ -3,7 +3,7 @@ import { ClientController } from "@app/client/client.controller";
 import { ClientService } from "@app/client/client.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ClientEntity } from "./client.entity";
-import { AuthGuard } from "@app/user/guards/auth.guard";
+import { AuthGuard } from "@app/employee/guards/auth.guard";
 
 @Module({
   imports: [TypeOrmModule.forFeature([ClientEntity])],

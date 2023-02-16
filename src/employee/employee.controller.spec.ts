@@ -26,7 +26,7 @@ describe("EmployeeController", () => {
     await module.close();
   });
 
-  it("should have a createUser function", () => {
-    expect(typeof employeeController.createUser).toBe("function");
+  it("should have a createEmployee function", () => {
+    expect(typeof employeeController.createEmployee).toBe("function");
   });
 });

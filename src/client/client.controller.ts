@@ -14,7 +14,7 @@ import { ClientService } from '@app/client/client.service';
 import { ClientResponseInterface } from './types/clientResponse.interface';
 import { CreateClientDto } from '@app/client/dto/createClient.dto';
 import { DeleteResult } from 'typeorm';
-import { AuthGuard } from '@app/user/guards/auth.guard';
+import { AuthGuard } from '@app/employee/guards/auth.guard';
 import { UpdateClientDto } from './dto/updateClient.dto';
 import { ClientEntity } from './client.entity';
 
@@ -25,7 +25,7 @@ export class ClientController {
   // Create client
   @Post('client')
   @UsePipes(new ValidationPipe())
-  async createUser(
+  async createClient(
     @Body('client') createClientDto: CreateClientDto,
   ): Promise<ClientResponseInterface> {
     const client = await this.clientService.createClient(createClientDto);
@@ -34,7 +34,7 @@ export class ClientController {
 
   // Get client by id
   @Get('client/:id')
-  async currentUser(
+  async currentClient(
     @Param('id') clientId: number,
   ): Promise<ClientResponseInterface> {
     const client = await this.clientService.findById(clientId);
@@ -50,7 +50,7 @@ export class ClientController {
   //Update client
   @Put('client/:id')
   @UseGuards(AuthGuard)
-  async updateCurrentUser(
+  async updateCurrentClient(
     @Param('id') clientId: number,
     @Body('client') updateClientDto: UpdateClientDto,
   ): Promise<ClientResponseInterface> {

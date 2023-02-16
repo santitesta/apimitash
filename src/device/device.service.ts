@@ -10,7 +10,7 @@ import { DeviceEntity } from "@app/device/device.entity";
 import { DeviceResponseInterface } from "./types/deviceResponse.interface";
 import { CreateDeviceDto } from "./dto/createDevice.dto";
 import { UpdateDeviceDto } from "./dto/updateDevice.dto";
-import { EmployeeEntity } from "@app/user/employee.entity";
+import { EmployeeEntity } from "@app/employee/employee.entity";
 ConfigModule.forRoot();
 
 @Injectable()
@@ -21,7 +21,7 @@ export class DeviceService {
     @InjectRepository(ClientEntity)
     private readonly clientRepository: Repository<ClientEntity>,
     @InjectRepository(EmployeeEntity)
-    private readonly userRepository: Repository<EmployeeEntity>
+    private readonly employeeRepository: Repository<EmployeeEntity>
   ) {}
 
   // Create device

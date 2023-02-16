@@ -7,7 +7,7 @@ import {
 } from "typeorm";
 import { DeviceEntity } from "@app/device/device.entity";
 import { stateEnum } from "./types/stateEnum.type";
-import { EmployeeEntity } from "@app/user/employee.entity";
+import { EmployeeEntity } from "@app/employee/employee.entity";
 
 @Entity({ name: "orders" })
 export class OrderEntity {

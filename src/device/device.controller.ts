@@ -34,7 +34,7 @@ export class DeviceController {
 
   // Get device by id
   @Get('device/:id')
-  async currentUser(
+  async getDeviceById(
     @Param('id') deviceId: number,
   ): Promise<DeviceResponseInterface> {
     const device = await this.deviceService.findById(deviceId);
@@ -49,7 +49,7 @@ export class DeviceController {
 
   //Update device
   @Put('device/:deviceId')
-  async updateCurrentUser(
+  async updateDevice(
     @Param('deviceId') deviceId: number,
     @Body('employee') updateDeviceDto: UpdateDeviceDto,
   ): Promise<DeviceResponseInterface> {
