@@ -6,7 +6,7 @@ export class SeedDb1675114030651 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
       // Password is asdf
-      `INSERT INTO users (username, email, role , password) VALUES ('santi', 'santi@mail.com', 'Tecnico', '$2b$10$CaXOxiyMv//b3a/fgUra9udBZxgW8ZkZ9Ku69QgZY8eU7Wf7LyNGu')`,
+      `INSERT INTO employees (username, email, role , password) VALUES ('santi', 'santi@mail.com', 'Tecnico', '$2b$10$f6GFy9oXlWUWYGalccrk8OoiOdZuaBXLEioInEoxSzR5jDX4IpH72')`,
     );
 
     await queryRunner.query(
@@ -18,7 +18,7 @@ export class SeedDb1675114030651 implements MigrationInterface {
     );
 
     await queryRunner.query(
-      `INSERT INTO orders (description, "deviceId") VALUES ('Un caño tiene una fractura', '1')`,
+      `INSERT INTO orders (description, "deviceId") VALUES ('Tiene una fractura', '1')`,
     );
   }
 

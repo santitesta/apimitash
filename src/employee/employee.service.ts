@@ -100,7 +100,8 @@ export class EmployeeService {
         username: employee.username,
         email: employee.email,
       },
-      process.env.JWT_SECRET
+      process.env.JWT_SECRET,
+      { expiresIn: "24h" }
     );
   }
 
