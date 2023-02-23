@@ -1,13 +1,11 @@
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 import { ConfigModule } from "@nestjs/config";
 
-let host: string;
+let host: string = "localhost";
 let nodeEnv: string = process.env.NODE_ENV;
-if (nodeEnv === "development") {
-  ConfigModule.forRoot();
-  host = "localhost";
-} else {
-  ConfigModule.forRoot();
+ConfigModule.forRoot();
+
+if (nodeEnv !== "development") {
   host = process.env.DB_HOST;
 }
 
