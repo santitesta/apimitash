@@ -1,13 +1,14 @@
-import { ConfigModule } from '@nestjs/config';
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { ConfigModule } from "@nestjs/config";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
 
-import { OrderEntity } from './order.entity';
-import { OrderResponseInterface } from './types/orderResponse.interface';
-import { DeviceEntity } from '@app/device/device.entity';
-import { CreateOrderDto } from './dto/createOrder.dto';
-import { UpdateOrderDto } from './dto/updateOrder.dto';
+import { OrderEntity } from "./order.entity";
+import { OrderResponseInterface } from "./types/orderResponse.interface";
+import { DeviceEntity } from "@app/device/device.entity";
+import { CreateOrderDto } from "./dto/createOrder.dto";
+import { UpdateOrderDto } from "./dto/updateOrder.dto";
+import { EmployeeEntity } from "@app/employee/employee.entity";
 ConfigModule.forRoot();
 
 @Injectable()
@@ -17,6 +18,8 @@ export class OrderService {
     private readonly orderRepository: Repository<OrderEntity>,
     @InjectRepository(DeviceEntity)
     private readonly deviceRepository: Repository<DeviceEntity>,
+    @InjectRepository(EmployeeEntity)
+    private readonly employeeRepository: Repository<EmployeeEntity>
   ) {}
 
   // Create order
@@ -27,8 +30,8 @@ export class OrderService {
 
     if (!device) {
       throw new HttpException(
-        'Device does not exist',
-        HttpStatus.UNPROCESSABLE_ENTITY,
+        "Device does not exist",
+        HttpStatus.UNPROCESSABLE_ENTITY
       );
     }
 
@@ -55,14 +58,14 @@ export class OrderService {
   // Update order
   async updateOrder(
     orderId: number,
-    updateOrderDto: UpdateOrderDto,
+    updateOrderDto: UpdateOrderDto
   ): Promise<OrderEntity> {
     const order = await this.findById(orderId);
 
     if (!order) {
       throw new HttpException(
-        'Order does not exist',
-        HttpStatus.UNPROCESSABLE_ENTITY,
+        "Order does not exist",
+        HttpStatus.UNPROCESSABLE_ENTITY
       );
     }
 
@@ -76,5 +79,34 @@ export class OrderService {
 
   buildOrderResponse(order: OrderEntity): OrderResponseInterface {
     return { order };
+  }
+
+  async assignEmployee(
+    orderId: number,
+    employeeId: number
+  ): Promise<OrderEntity> {
+    const order = await this.findById(orderId);
+
+    if (!order) {
+      throw new HttpException(
+        "Order does not exist",
+        HttpStatus.UNPROCESSABLE_ENTITY
+      );
+    }
+
+    const employee = await this.employeeRepository.findOne({
+      where: { id: employeeId },
+    });
+
+    if (!employee) {
+      throw new HttpException(
+        "Employee does not exist",
+        HttpStatus.UNPROCESSABLE_ENTITY
+      );
+    }
+
+    order.employee = employee;
+
+    return this.orderRepository.save(order);
   }
 }
